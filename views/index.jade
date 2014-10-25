@@ -1,25 +1,28 @@
 extends layout
 
-block content
-	section#login
-		header
-			h1 CONSUMMER
-			P Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu risus. Curabitur commodo lorem fringilla enim feugiat commodo sed ac lacus.
-		.clearfix
-
-		<!-- Login -->	
-		form.box.tile.animated.active#box-login(action='', method='post')
-			h2.m-t-0.m-b-15 Login
-			input(type='text',name='user',placeholder='Username or Email Address').login-control.m-b-10.required
-			input(type='password',name='pass',placeholder='Password').login-control.required
-			.checkbox.m-b-20
-				label Remember Me
-					input(type='checkbox') 
-			button.btn.btn-sm.m-r-5 Sign In	
-			small
-				a.box-switcher(data-switch='box-register',href='#') Don't have an Account? or		
-				a.box-switcher(data-switch='box-reset', href='#') Forgot Password?
-					
-
-
-						
+block content 
+  .row
+    #formModal.modal
+      .modal-dialog
+        .modal-content
+          .modal-header
+            h2.title-modal
+          .modal-body
+            p.formModal
+          .modal-footer
+    #title.well
+      h2 Bienvenido al chat
+    .col-md-9#containerMessages
+      .panel.panel-primary.head
+        .panel-heading
+          p Mensajes de la sala
+      #chatMsgs
+    .col-md-3#containerUsers
+      .panel.panel-primary.head
+        .panel-heading
+          p Usuarios
+      #chatUsers
+    .col-md-7#containerSendMessages
+      input.message.col-md-12.form-control(type="text",placeholder="Escribe un mensaje")
+    .col-md-2#containerSendMessages
+      button.btn.btn-large.btn-block.btn-primary.sendMsg() Enviar mensaje

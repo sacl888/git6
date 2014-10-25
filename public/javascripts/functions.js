@@ -1,667 +1,197 @@
-$(document).ready(function(){
-    /* --------------------------------------------------------
-	Template Settings
-    -----------------------------------------------------------*/
-    
-    var settings =  '<a id="settings" href="#changeSkin" data-toggle="modal">' +
-			'<i class="fa fa-gear"></i> Change Skin' +
-		    '</a>' +   
-		    '<div class="modal fade" id="changeSkin" tabindex="-1" role="dialog" aria-hidden="true">' +
-			'<div class="modal-dialog modal-lg">' +
-			    '<div class="modal-content">' +
-				'<div class="modal-header">' +
-				    '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
-				    '<h4 class="modal-title">Change Template Skin</h4>' +
-				'</div>' +
-				'<div class="modal-body">' +
-				    '<div class="row template-skins">' +
-					'<a data-skin="skin-blur-violate" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-violate.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-blur-lights" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-lights.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-blur-city" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-city.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-blur-greenish" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-greenish.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-blur-night" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-night.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-blur-blue" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-blue.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-blur-sunny" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-sunny.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-cloth" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-cloth.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-tectile" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-tectile.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-blur-chrome" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-chrome.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-blur-ocean" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-ocean.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-blur-sunset" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-sunset.jpg" alt="">' +
-					'</a>' +
-					'<a data-skin="skin-blur-yellow" class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-yellow.jpg" alt="">' +
-					'</a>' +
-					'<a  data-skin="skin-blur-kiwi"class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-kiwi.jpg" alt="">' +
-					'</a>' +
-					'<a  data-skin="skin-blur-nexus"class="col-sm-2 col-xs-4" href="">' +
-					    '<img src="img/skin-nexus.jpg" alt="">' +
-					'</a>' +
-				    '</div>' +
-				'</div>' +
-			    '</div>' +
-			'</div>' +
-		    '</div>';
-    $('#main').prepend(settings);
-            
-    $('body').on('click', '.template-skins > a', function(e){
-	e.preventDefault();
-	var skin = $(this).attr('data-skin');
-	$('body').attr('id', skin);
-	$('#changeSkin').modal('hide');
-    });
-    
-    
-    /* --------------------------------------------------------
-	Components
-    -----------------------------------------------------------*/
-    (function(){
-        /* Textarea */
-	if($('.auto-size')[0]) {
-	    $('.auto-size').autosize();
-	}
+var socket = io.connect('http://localhost:3000');
 
-        //Select
-	if($('.select')[0]) {
-	    $('.select').selectpicker();
-	}
-        
-        //Sortable
-        if($('.sortable')[0]) {
-	    $('.sortable').sortable();
-	}
-	
-        //Tag Select
-	if($('.tag-select')[0]) {
-	    $('.tag-select').chosen();
-	}
-        
-        /* Tab */
-	if($('.tab')[0]) {
-	    $('.tab a').click(function(e) {
-		e.preventDefault();
-		$(this).tab('show');
-	    });
-	}
-        
-        /* Collapse */
-	if($('.collapse')[0]) {
-	    $('.collapse').collapse();
-	}
-        
-        /* Accordion */
-        $('.panel-collapse').on('shown.bs.collapse', function () {
-            $(this).prev().find('.panel-title a').removeClass('active');
-        });
+//al actualizar la página eliminamos la sesión del usuario de sessionStorage
+$(document).ready(function()
+{
+    manageSessions.unset("login");
+});
 
-        $('.panel-collapse').on('hidden.bs.collapse', function () {
-            $(this).prev().find('.panel-title a').addClass('active');
-        });
+//función para mantener el scroll siempre al final del div donde se muestran los mensajes
+//con una pequeña animación
+function animateScroll()
+{
+    var container = $('#containerMessages');
+    container.animate({"scrollTop": $('#containerMessages')[0].scrollHeight}, "slow");
+}
 
-        //Popover
-    	if($('.pover')[0]) {
-    	    $('.pover').popover();
-    	} 
-    })();
-
-    /* --------------------------------------------------------
-	Sidebar + Menu
-    -----------------------------------------------------------*/
-    (function(){
-        /* Menu Toggle */
-        $('body').on('click touchstart', '#menu-toggle', function(e){
-            e.preventDefault();
-            $('html').toggleClass('menu-active');
-            $('#sidebar').toggleClass('toggled');
-            //$('#content').toggleClass('m-0');
-        });
-         
-        /* Active Menu */
-        $('#sidebar .menu-item').hover(function(){
-            $(this).closest('.dropdown').addClass('hovered');
-        }, function(){
-            $(this).closest('.dropdown').removeClass('hovered');
-        });
-
-        /* Prevent */
-        $('.side-menu .dropdown > a').click(function(e){
-            e.preventDefault();
-        });
-	
-
-    })();
-
-    /* --------------------------------------------------------
-	Chart Info
-    -----------------------------------------------------------*/
-    (function(){
-        $('body').on('click touchstart', '.tile .tile-info-toggle', function(e){
-            e.preventDefault();
-            $(this).closest('.tile').find('.chart-info').toggle();
-        });
-    })();
-
-    /* --------------------------------------------------------
-	Todo List
-    -----------------------------------------------------------*/
-    (function(){
-        setTimeout(function(){
-            //Add line-through for alreadt checked items
-            $('.todo-list .media .checked').each(function(){
-                $(this).closest('.media').find('.checkbox label').css('text-decoration', 'line-through')
-            });
-
-            //Add line-through when checking
-            $('.todo-list .media input').on('ifChecked', function(){
-                $(this).closest('.media').find('.checkbox label').css('text-decoration', 'line-through');
-            });
-
-            $('.todo-list .media input').on('ifUnchecked', function(){
-                $(this).closest('.media').find('.checkbox label').removeAttr('style');
-            });    
-        })
-    })();
-
-    /* --------------------------------------------------------
-	Custom Scrollbar
-    -----------------------------------------------------------*/
-    (function() {
-	if($('.overflow')[0]) {
-	    var overflowRegular, overflowInvisible = false;
-	    overflowRegular = $('.overflow').niceScroll();
-	}
-    })();
-
-    /* --------------------------------------------------------
-	Messages + Notifications
-    -----------------------------------------------------------*/
-    (function(){
-        $('body').on('click touchstart', '.drawer-toggle', function(e){
-            e.preventDefault();
-            var drawer = $(this).attr('data-drawer');
-
-            $('.drawer:not("#'+drawer+'")').removeClass('toggled');
-
-            if ($('#'+drawer).hasClass('toggled')) {
-                $('#'+drawer).removeClass('toggled');
-            }
-            else{
-                $('#'+drawer).addClass('toggled');
-            }
-        });
-
-        //Close when click outside
-        $(document).on('mouseup touchstart', function (e) {
-            var container = $('.drawer, .tm-icon');
-            if (container.has(e.target).length === 0) {
-                $('.drawer').removeClass('toggled');
-                $('.drawer-toggle').removeClass('open');
-            }
-        });
-
-        //Close
-        $('body').on('click touchstart', '.drawer-close', function(){
-            $(this).closest('.drawer').removeClass('toggled');
-            $('.drawer-toggle').removeClass('open');
-        });
-    })();
-
-
-    /* --------------------------------------------------------
-	Calendar
-    -----------------------------------------------------------*/
-    (function(){
-	
-        //Sidebar
-        if ($('#sidebar-calendar')[0]) {
-            var date = new Date();
-            var d = date.getDate();
-            var m = date.getMonth();
-            var y = date.getFullYear();
-            $('#sidebar-calendar').fullCalendar({
-                editable: false,
-                events: [],
-                header: {
-                    left: 'title'
-                }
-            });
+//función anónima donde vamos añadiendo toda la funcionalidad del chat
+$(function()
+{
+    //llamamos a la función que mantiene el scroll al fondo
+    animateScroll();
+    //si el usuario no ha iniciado sesión prevenimos que pueda acceder
+    showModal("Formulario de inicio de sesión",renderForm());
+    //al poner el foco en el campo de texto del mensaje o pulsar el botón de enviar
+    $("#containerSendMessages, #containerSendMessages input").on("focus click", function(e)
+    {
+        e.preventDefault();
+        if(!manageSessions.get("login"))
+        {
+            showModal("Formulario de inicio de sesión",renderForm(), false);
         }
-
-        //Content widget
-        if ($('#calendar-widget')[0]) {
-            $('#calendar-widget').fullCalendar({
-                header: {
-                    left: 'title',
-                    right: 'prev, next',
-                    //right: 'month,basicWeek,basicDay'
-                },
-                editable: true,
-                events: [
-                    {
-                        title: 'All Day Event',
-                        start: new Date(y, m, 1)
-                    },
-                    {
-                        title: 'Long Event',
-                        start: new Date(y, m, d-5),
-                        end: new Date(y, m, d-2)
-                    },
-                    {
-                        title: 'Repeat Event',
-                        start: new Date(y, m, 3),
-                        allDay: false
-                    },
-                    {
-                        title: 'Repeat Event',
-                        start: new Date(y, m, 4),
-                        allDay: false
-                    }
-                ]
-            });
-        }
-
-    })();
-
-    /* --------------------------------------------------------
-	RSS Feed widget
-    -----------------------------------------------------------*/
-    (function(){
-	if($('#news-feed')[0]){
-	    $('#news-feed').FeedEk({
-		FeedUrl: 'http://rss.cnn.com/rss/edition.rss',
-		MaxCount: 5,
-		ShowDesc: false,
-		ShowPubDate: true,
-		DescCharacterLimit: 0
-	    });
-	}
-    })();
-
-    /* --------------------------------------------------------
-	Chat
-    -----------------------------------------------------------*/
-    $(function() {
-        $('body').on('click touchstart', '.chat-list-toggle', function(){
-            $(this).closest('.chat').find('.chat-list').toggleClass('toggled');
-        });
-
-        $('body').on('click touchstart', '.chat .chat-header .btn', function(e){
-            e.preventDefault();
-            $('.chat .chat-list').removeClass('toggled');
-            $(this).closest('.chat').toggleClass('toggled');
-        });
-
-        $(document).on('mouseup touchstart', function (e) {
-            var container = $('.chat, .chat .chat-list');
-            if (container.has(e.target).length === 0) {
-                container.removeClass('toggled');
-            }
-        });
     });
 
-    /* --------------------------------------------------------
-	Form Validation
-    -----------------------------------------------------------*/
-    (function(){
-	if($("[class*='form-validation']")[0]) {
-	    $("[class*='form-validation']").validationEngine();
+    //al pulsar en el botón de Entrar 
+    $("#loginBtn").on("click", function(e)
+    {
+        e.preventDefault();
+        //si el nombre de usuario es menor de 2 carácteres
+        if($(".username").val().length < 2)
+        {
+            //ocultamos el mensaje de error
+            $(".errorMsg").hide();
+            //mostramos el mensaje de nuevo y ponemos el foco en el campo de texto
+            $(".username").after("<div class='col-md-12 alert alert-danger errorMsg'>Debes introducir un nombre para acceder al chat.</div>").focus(); 
+            //cortamos la ejecución
+            return;
+        }
+        //en otro caso, creamos la sesión login y lanzamos el evento loginUser
+        //pasando el nombre del usuario que se ha conectado
+        manageSessions.set("login", $(".username").val());
+        //llamamos al evento loginUser, el cuál creará un nuevo socket asociado a nuestro usuario
+        socket.emit("loginUser", manageSessions.get("login"));
+        //ocultamos la ventana modal
+        $("#formModal").modal("hide");
+        //llamamos a la función que mantiene el scroll al fondo
+        animateScroll();
+    });
 
-	    //Clear Prompt
-	    $('body').on('click', '.validation-clear', function(e){
-		e.preventDefault();
-		$(this).closest('form').validationEngine('hide');
-	    });
-	}
-    })();
+    //si el usuario está en uso lanzamos el evento userInUse y mostramos el mensaje
+    socket.on("userInUse", function()
+    {
+        //mostramos la ventana modal
+        $("#formModal").modal("show");
+        //eliminamos la sesión que se ha creado relacionada al usuario
+        manageSessions.unset("login");
+        //ocultamos los mensajes de error de la modal
+        $(".errorMsg").hide();
+        //añadimos un nuevo mensaje de error y ponemos el foco en el campo de texto de la modal
+        $(".username").after("<div class='col-md-12 alert alert-danger errorMsg'>El usuario que intenta escoge está en uso.</div>").focus();
+        return; 
+    });
 
-    /* --------------------------------------------------------
-     `Color Picker
-    -----------------------------------------------------------*/
-    (function(){
-        //Default - hex
-	if($('.color-picker')[0]) {
-	    $('.color-picker').colorpicker();
-	}
-        
-        //RGB
-	if($('.color-picker-rgb')[0]) {
-	    $('.color-picker-rgb').colorpicker({
-		format: 'rgb'
-	    });
-	}
-        
-        //RGBA
-	if($('.color-picker-rgba')[0]) {
-	    $('.color-picker-rgba').colorpicker({
-		format: 'rgba'
-	    });
-	}
-	
-	//Output Color
-	if($('[class*="color-picker"]')[0]) {
-	    $('[class*="color-picker"]').colorpicker().on('changeColor', function(e){
-		var colorThis = $(this).val();
-		$(this).closest('.color-pick').find('.color-preview').css('background',e.color.toHex());
-	    });
-	}
-    })();
+    //cuando se emite el evente refreshChat
+    socket.on("refreshChat", function(action, message)
+    {
+        //simplemente mostramos el nuevo mensaje a los usuarios
+        //si es una nueva conexión
+        if(action == "conectado")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-info'>" + message + "</p>");
+        }
+        //si es una desconexión
+        else if(action == "desconectado")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-danger'>" + message + "</p>");
+        }
+        //si es un nuevo mensaje 
+        else if(action == "msg")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-warning'>" + message + "</p>");
+        }
+        //si el que ha conectado soy yo
+        else if(action == "yo")
+        {
+            $("#chatMsgs").append("<p class='col-md-12 alert-success'>" + message + "</p>");
+        }
+        //llamamos a la función que mantiene el scroll al fondo
+        animateScroll();
+    });
 
-    /* --------------------------------------------------------
-     Date Time Picker
-     -----------------------------------------------------------*/
-    (function(){
-        //Date Only
-	if($('.date-only')[0]) {
-	    $('.date-only').datetimepicker({
-		pickTime: false
-	    });
-	}
+    //actualizamos el sidebar que contiene los usuarios conectados cuando
+    //alguno se conecta o desconecta, el parámetro son los usuarios online actualmente
+    socket.on("updateSidebarUsers", function(usersOnline)
+    {
+        //limpiamos el sidebar donde almacenamos usuarios
+        $("#chatUsers").html("");
+        //si hay usuarios conectados, para evitar errores
+        if(!isEmptyObject(usersOnline))
+        {
+            //recorremos el objeto y los mostramos en el sidebar, los datos
+            //están almacenados con {clave : valor}
+            $.each(usersOnline, function(key, val)
+            {
+                $("#chatUsers").append("<p class='col-md-12 alert-info'>" + key + "</p>");
+            })
+        }
+    });
 
-        //Time only
-	if($('.time-only')[0]) {
-	    $('.time-only').datetimepicker({
-		pickDate: false
-	    });
-	}
+    //al pulsar el botón de enviar mensaje
+    $('.sendMsg').on("click", function() 
+    {
+        //capturamos el valor del campo de texto donde se escriben los mensajes
+        var message = $(".message").val();
+        if(message.length > 2)
+        {
+            //emitimos el evento addNewMessage, el cuál simplemente mostrará
+            //el mensaje escrito en el chat con nuestro nombre, el cuál 
+            //permanece en la sesión del socket relacionado a mi conexión
+            socket.emit("addNewMessage", message);
+            //limpiamos el mensaje
+            $(".message").val("");
+        }
+        else
+        {
+            showModal("Error formulario","<p class='alert alert-danger'>El mensaje debe ser de al menos dos carácteres.</p>", "true");
+        }
+        //llamamos a la función que mantiene el scroll al fondo
+        animateScroll();
+    });
 
-        //12 Hour Time
-	if($('.time-only-12')[0]) {
-	    $('.time-only-12').datetimepicker({
-		pickDate: false,
-		pick12HourFormat: true
-	    });
-	}
-        
-        $('.datetime-pick input:text').on('click', function(){
-            $(this).closest('.datetime-pick').find('.add-on i').click();
-        });
-    })();
+});
 
-    /* --------------------------------------------------------
-     Input Slider
-     -----------------------------------------------------------*/
-    (function(){
-	if($('.input-slider')[0]) {
-	    $('.input-slider').slider().on('slide', function(ev){
-		$(this).closest('.slider-container').find('.slider-value').val(ev.value);
-	    });
-	}
-    })();
-
-    /* --------------------------------------------------------
-     WYSIWYE Editor + Markedown
-     -----------------------------------------------------------*/
-    (function(){
-        //Markedown
-	if($('.markdown-editor')[0]) {
-	    $('.markdown-editor').markdown({
-		autofocus:false,
-		savable:false
-	    });
-	}
-        
-        //WYSIWYE Editor
-	if($('.wysiwye-editor')[0]) {
-	    $('.wysiwye-editor').summernote({
-		height: 200
-	    });
-	}
-        
-    })();
-
-    /* --------------------------------------------------------
-     Media Player
-     -----------------------------------------------------------*/
-    (function(){
-	if($('audio, video')[0]) {
-	    $('audio,video').mediaelementplayer({
-		success: function(player, node) {
-		    $('#' + node.id + '-mode').html('mode: ' + player.pluginType);
-		}
-	    });
-	}
-    })();
-
-    /* ---------------------------
-	Image Popup [Pirobox]
-    --------------------------- */
-    (function() {
-	if($('.pirobox_gall')[0]) {
-	    //Fix IE
-	    jQuery.browser = {};
-	    (function () {
-		jQuery.browser.msie = false;
-		jQuery.browser.version = 0;
-		if (navigator.userAgent.match(/MSIE ([0-9]+)\./)) {
-		    jQuery.browser.msie = true;
-		    jQuery.browser.version = RegExp.$1;
-		}
-	    })();
-	    
-	    //Lightbox
-	    $().piroBox_ext({
-		piro_speed : 700,
-		bg_alpha : 0.5,
-		piro_scroll : true // pirobox always positioned at the center of the page
-	    });
-	}
-    })();
-
-    /* ---------------------------
-     Vertical tab
-     --------------------------- */
-    (function(){
-        $('.tab-vertical').each(function(){
-            var tabHeight = $(this).outerHeight();
-            var tabContentHeight = $(this).closest('.tab-container').find('.tab-content').outerHeight();
-
-            if ((tabContentHeight) > (tabHeight)) {
-                $(this).height(tabContentHeight);
-            }
-        })
-
-        $('body').on('click touchstart', '.tab-vertical li', function(){
-            var tabVertical = $(this).closest('.tab-vertical');
-            tabVertical.height('auto');
-
-            var tabHeight = tabVertical.outerHeight();
-            var tabContentHeight = $(this).closest('.tab-container').find('.tab-content').outerHeight();
-
-            if ((tabContentHeight) > (tabHeight)) {
-                tabVertical.height(tabContentHeight);
-            }
-        });
-
-
-    })();
-    
-    /* --------------------------------------------------------
-     Login + Sign up
-    -----------------------------------------------------------*/
-    (function(){
-	$('body').on('click touchstart', '.box-switcher', function(e){
-	    e.preventDefault();
-	    var box = $(this).attr('data-switch');
-	    $(this).closest('.box').toggleClass('active');
-	    $('#'+box).closest('.box').addClass('active'); 
-	});
-    })();
-    
-   
-    
-    /* --------------------------------------------------------
-     Checkbox + Radio
-     -----------------------------------------------------------*/
-    if($('input:checkbox, input:radio')[0]) {
-    	
-	//Checkbox + Radio skin
-	$('input:checkbox:not([data-toggle="buttons"] input, .make-switch input), input:radio:not([data-toggle="buttons"] input)').iCheck({
-		    checkboxClass: 'icheckbox_minimal',
-		    radioClass: 'iradio_minimal',
-		    increaseArea: '20%' // optional
-	});
-    
-	//Checkbox listing
-	var parentCheck = $('.list-parent-check');
-	var listCheck = $('.list-check');
-    
-	parentCheck.on('ifChecked', function(){
-		$(this).closest('.list-container').find('.list-check').iCheck('check');
-	});
-    
-	parentCheck.on('ifClicked', function(){
-		$(this).closest('.list-container').find('.list-check').iCheck('uncheck');
-	});
-    
-	listCheck.on('ifChecked', function(){
-		    var parent = $(this).closest('.list-container').find('.list-parent-check');
-		    var thisCheck = $(this).closest('.list-container').find('.list-check');
-		    var thisChecked = $(this).closest('.list-container').find('.list-check:checked');
-	    
-		    if(thisCheck.length == thisChecked.length) {
-			parent.iCheck('check');
-		    }
-	});
-    
-	listCheck.on('ifUnchecked', function(){
-		    var parent = $(this).closest('.list-container').find('.list-parent-check');
-		    parent.iCheck('uncheck');
-	});
-    
-	listCheck.on('ifChanged', function(){
-		    var thisChecked = $(this).closest('.list-container').find('.list-check:checked');
-		    var showon = $(this).closest('.list-container').find('.show-on');
-		    if(thisChecked.length > 0 ) {
-			showon.show();
-		    }
-		    else {
-			showon.hide();
-		    }
-	});
+//funcion que recibe como parametros el titulo y el mensaje de la ventana modal
+//reaprovechar codigo siempre que se pueda
+function showModal(title,message,showClose)
+{
+    console.log(showClose)
+    $("h2.title-modal").text(title).css({"text-align":"center"});
+    $("p.formModal").html(message);
+    if(showClose == "true")
+    {
+        $(".modal-footer").html('<a data-dismiss="modal" aria-hidden="true" class="btn btn-danger">Cerrar</a>');
+        $("#formModal").modal({show:true});
     }
-    
-    /* --------------------------------------------------------
-        MAC Hack 
-    -----------------------------------------------------------*/
-    (function(){
-	//Mac only
-        if(navigator.userAgent.indexOf('Mac') > 0) {
-            $('body').addClass('mac-os');
-        }
-    })();
+    else
+    {
+        $("#formModal").modal({show:true, backdrop: 'static', keyboard: true });
+    }
+}
 
-    /* --------------------------------------------------------
-	Photo Gallery
-    -----------------------------------------------------------*/
-    (function(){
-        if($('.photo-gallery')[0]){
-            $('.photo-gallery').SuperBox();
-        }
-    })();
-    
-});
+//formulario html para mostrar en la ventana modal
+function renderForm()
+{
+    var html = "";
+    html += '<div class="form-group" id="formLogin">';
+    html += '<input type="text" id="username" class="form-control username" placeholder="Introduce un nombre de usuario">';
+    html += '</div>';
+    html += '<button type="submit" class="btn btn-primary btn-large" id="loginBtn">Entrar</button>';
+    return html;
+}
 
-$(window).load(function(){
-    /* --------------------------------------------------------
-     Tooltips
-     -----------------------------------------------------------*/
-    (function(){
-        if($('.tooltips')[0]) {
-            $('.tooltips').tooltip();
-        }
-    })();
+//objeto para el manejo de sesiones
+var manageSessions = {
+    //obtenemos una sesión //getter
+    get: function(key) {
+        return sessionStorage.getItem(key);
+    },
+    //creamos una sesión //setter
+    set: function(key, val) {
+        return sessionStorage.setItem(key, val);
+    },
+    //limpiamos una sesión
+    unset: function(key) {
+        return sessionStorage.removeItem(key);
+    }
+};
 
-    /* --------------------------------------------------------
-     Animate numbers
-     -----------------------------------------------------------*/
-    $('.quick-stats').each(function(){
-        var target = $(this).find('h2');
-        var toAnimate = $(this).find('h2').attr('data-value');
-        // Animate the element's value from x to y:
-        $({someValue: 0}).animate({someValue: toAnimate}, {
-            duration: 1000,
-            easing:'swing', // can be anything
-            step: function() { // called on every step
-                // Update the element's text with rounded-up value:
-                target.text(commaSeparateNumber(Math.round(this.someValue)));
-            }
-        });
-
-        function commaSeparateNumber(val){
-            while (/(\d+)(\d{3})/.test(val.toString())){
-                val = val.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-            }
-            return val;
-        }
-    });
-    
-});
-
-/* --------------------------------------------------------
-Date Time Widget
------------------------------------------------------------*/
-(function(){
-    var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
-    var dayNames= ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
-
-    // Create a newDate() object
-    var newDate = new Date();
-
-    // Extract the current date from Date object
-    newDate.setDate(newDate.getDate());
-
-    // Output the day, date, month and year
-    $('#date').html(dayNames[newDate.getDay()] + " " + newDate.getDate() + ' ' + monthNames[newDate.getMonth()] + ' ' + newDate.getFullYear());
-
-    setInterval( function() {
-
-        // Create a newDate() object and extract the seconds of the current time on the visitor's
-        var seconds = new Date().getSeconds();
-
-        // Add a leading zero to seconds value
-        $("#sec").html(( seconds < 10 ? "0":"" ) + seconds);
-    },1000);
-
-    setInterval( function() {
-
-        // Create a newDate() object and extract the minutes of the current time on the visitor's
-        var minutes = new Date().getMinutes();
-
-        // Add a leading zero to the minutes value
-        $("#min").html(( minutes < 10 ? "0":"" ) + minutes);
-    },1000);
-
-    setInterval( function() {
-
-        // Create a newDate() object and extract the hours of the current time on the visitor's
-        var hours = new Date().getHours();
-
-        // Add a leading zero to the hours value
-        $("#hours").html(( hours < 10 ? "0" : "" ) + hours);
-    }, 1000);
-})();
-
-
+//función que comprueba si un objeto está vacio, devuelve un boolean
+function isEmptyObject(obj) 
+{
+    var name;
+    for (name in obj) 
+    {
+        return false;
+    }
+    return true;
+}
