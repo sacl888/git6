@@ -1,0 +1,640 @@
+extends layout
+
+block content	
+	script(type='text/javascript' src='/javascripts/validation/script.js')
+	header#header.media
+		a(href="#")#menu-toggle
+		a.logo.pull-left(href="#") Admin Consummer
+
+		.media-body
+			.media#top-menu
+				.pull-left.tm-icon
+					a(data-drawer="messages", href="#").drawer-toggle
+						i.sa-top-message
+						i.n-count.animated 5
+						span Messages
+				.pull-left.tm-icon
+					a(data-drawer="notifications", href="#").drawer-toggle
+						i.sa-top-updates
+						i.n-count.animated 9
+						span Updates 
+
+				#time.pull-left
+					span#hours 
+					span#min
+					span#sec
+
+				.media-body
+					input(type="text").main-search
+	.clearfix
+	section.p-relative(role="main")#main
+		aside#sidebar
+			.side-widgets.overflow
+				.text-center.s-widget.m-b-25.dropdown#profile-menu
+					input(type="text", id="mail_usu", value="")
+					a(href="#",data-toggle="dropdown")
+						img.profile-pic.animate(src="img/profile-pic.jpg")
+					ul.dropdown-menu.profile-menu
+						li
+							a(href="#") My Profile
+							i.icon.left &#61903;
+							i.icon.right &#61815;
+						li
+							a(href="#") Messages
+							i.icon.left &#61903;
+							i.icon.right &#61815;
+						li
+							a(href="#") Settings
+							i.icon.left &#61903;
+							i.icon.right &#61815;
+						li
+							a(href="http://localhost:3000/salir") Sign Out
+							i.icon.left &#61903;
+							i.icon.right &#61815;
+					h4.m-o 
+				.s-widget.m-b-25
+					#sidebar-calendar
+
+				.s-widget.m-b-25
+					h2.tile-title News Feeds
+					.s-widget-body
+						#news-feed
+				.s-widget.m-b-25
+					h2.tile-title Projects on going
+
+					.s-widget-body
+						.side-border
+							small Joomla Website
+							.progress.progress-small
+								a(href="#", data-toggle="tooltip", title="", style="width: 60%;", data-original-title="60%").progress-bar.tooltips.progress-bar-danger					
+									span.sr-only 60% Complete
+						.side-border
+							small Opencart E-Commerce Website
+							.progress.progress-small
+								a(href="#", data-toggle="tooltip", title="", style="width: 43%", data-original-title="43%").tooltips.progress-bar.progress-bar-info
+									span.sr-only 43% Complete
+						.side-border
+							small Social Media API
+							.progress.progress-small
+								a(href="#", data-toggle="tooltip", title="", style="width: 81%;", data-original-title="81%").tooltips.progress-bar.progress-bar-warning
+									span.sr-only 81% Complete	
+						.side-border
+							small VB.Net Software Package
+							.progress.progress-small
+								a(href="#", data-toggle="tooltip", title="", style="width: 81%;", data-original-title="10%").tooltips.progress-bar.progress-bar-success
+									span.sr-only 10% Complete
+									.side-border
+						small Chrome Extension
+						.progress.progress-small
+							a(href="#", data-toggle="tooltip", title="", style="width: 81%;", data-original-title="10%").tooltips.progress-bar.progress-bar-success
+								span.sr-only 95% Complete
+			ul.list-unstyled.side-menu
+				li.active
+					a.sa-side-home(href="index-2.html")
+						span.menu-item Dashboard
+				li
+					a.sa-side-typography(href="typography.html")
+						span.menu-item Typography
+				li
+					a.sa-side-widget(href="content-widgets.html")
+						span.menu-item Widgets
+				li
+					a.sa-side-table(href="tables.html")
+						span.menu-item Tables
+				li.dropdown
+					a.sa-side-form(href="#")
+						span.menu-item Form
+					ul.list-unstyled.menu-item
+						li
+							a(href="form-elements.html") Basic Form Elements
+						li
+							a(href="form-components.html") Form Components
+						li
+							a(href="form-examples.html") Form Examples
+						li
+							a(href="form-validation.html") Form Validation
+				li.dropdown
+					a.sa-side-ui(href="#")
+						span.menu-item User Interface
+					ul.list-unstyled.menu-item
+						li
+							a(href="buttons.html") Buttons
+						li
+							a(href="labels.html") labels
+						li 
+							a(href="images-icons.html") Images &amp; Icons 
+						li 
+							a(href="alerts.html") Alerts 
+						li 
+							a(href="media.html") Media
+						li 
+							a(href="components.html") Components
+						li 
+							a(href="other-components.html") Others
+				li.dropdown
+					a.sa-side-photos(href="#")
+						span.menu-item PHOTO GALLERY
+						ul.list-unstyled.menu-item
+							li
+								a(href="photo-gallery-alt.html") Photo Gallery
+				li
+					a.sa-side-chart(href="charts.html")
+						span.menu-item Charts
+				li
+					a.sa-side-folder(href="file-manager.html")
+						span.menu-item File Manager
+				li
+					a.sa-side-calendar(href="calendar.html")
+						span.menu-item Calendar
+				li.dropdown
+					a.sa-side-page(href="#")
+						span.menu-item Pages
+					ul.list-unstyled.menu-item
+						li
+							a(href="list-view.html") List View
+						li
+							a(href="profile-page.html") Profile Page
+						li
+							a(href="messages.html") Messages
+						li
+							a(href="login.html") Login
+						li
+							a(href="404.html") 404 Error
+		section#content.container
+			#messages.tile.drawer.animated
+				.listview.narrow
+					.media
+						a(href="#")	Send a New Message
+						span.drawer-close &times;
+					.overflow(style="height: 254px")
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/1.jpg", alt="")
+							.media-body
+								small.text-muted Nadin Jackson - 2 Hours ago
+								br
+								a.t-overflow(href="#") Mauris consectetur urna nec tempor adipiscing. Proin sit amet nisi ligula. Sed eu adipiscing lectus
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/2.jpg", alt="")
+							.media-body
+								small.text-muted David Villa - 5 Hours ago
+								br
+								a.t-overflow(href="#") Suspendisse in purus ut nibh placerat Cras pulvinar euismod nunc quis gravida. Suspendisse pharetra																																														
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/3.jpg", alt="")
+							.media-body
+								small.text-muted Harris worgon - On 15/12/2013
+								br
+								a.t-overflow(href="#") Maecenas venenatis enim condimentum ultrices fringilla. Nulla eget libero rhoncus, bibendum diam eleifend, vulputate mi. Fusce non nibh pulvinar, ornare turpis id		
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/4.jpg", alt="")
+							.media-body
+								small.text-muted Mitch Bradberry - On 14/12/2013
+								br
+								a.t-overflow(href="#") Phasellus interdum felis enim, eu bibendum ipsum tristique vitae. Phasellus feugiat massa orci, sed viverra felis aliquet quis. Curabitur vel blandit odio. Vestibulum sagittis quis sem sit amet tristique.		
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/1.jpg", alt="")
+							.media-body
+								small.text-muted Nadin Jackson - On 15/12/2013
+								br
+								a.t-overflow(href="#") Ipsum wintoo consectetur urna nec tempor adipiscing. Proin sit amet nisi ligula. Sed eu adipiscing lectus
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/2.jpg", alt="")
+							.media-body
+								small.text-muted David Villa - On 16/12/2013
+								br
+								a.t-overflow(href="#") Suspendisse in purus ut nibh placerat Cras pulvinar euismod nunc quis gravida. Suspendisse pharetra		
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/3.jpg", alt="")
+							.media-body
+								small.text-muted Harris worgon - On 17/12/2013
+								br
+								a.t-overflow(href="#") Maecenas venenatis enim condimentum ultrices fringilla. Nulla eget libero rhoncus, bibendum diam eleifend, vulputate mi. Fusce non nibh pulvinar, ornare turpis id				
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/4.jpg", alt="")
+							.media-body
+								small.text-muted Mitch Bradberry - On 18/12/2013
+								br
+								a.t-overflow(href="#") Phasellus interdum felis enim, eu bibendum ipsum tristique vitae. Phasellus feugiat massa orci, sed viverra felis aliquet quis. Curabitur vel blandit odio. Vestibulum sagittis quis sem sit amet tristique.						
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/5.jpg", alt="")
+							.media-body
+								small.text-muted Wendy Mitchell - On 19/12/2013
+								br
+								a.t-overflow(href="#") Integer a eros dapibus, vehicula quam accumsan, tincidunt purus
+					.media.text-center.whiter.l-100
+						a(href="#")
+							small VIEW ALL	
+			#notifications.tile.drawer.animated
+				.listview.narrow
+					.media
+						a(href="#", style="hight:254px") Notification Settings
+						span.drawer-close &times;
+					.overflow(style="height: 254px;")
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/1.jpg", alt="")
+							.media-body
+								small.text-muted Nadin Jackson - 2 Hours ago
+								a.t-overflow(href="#")	Mauris consectetur urna nec tempor adipiscing. Proin sit amet nisi ligula. Sed eu adipiscing lectus
+						.media
+							.pull-left
+								img(width="40" src="img/profile-pics/2.jpg", alt="")
+							.media-body
+								small.text-muted David Villa - 5 Hours ago
+								br
+								a.t-overflow(href="#")	Suspendisse in purus ut nibh placerat Cras pulvinar euismod nunc quis gravida. Suspendisse pharetra
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/3.jpg", alt="")
+							.media-body
+								small.text-muted Harris worgon - On 15/12/2013
+								br
+								a.t-overflow(href="#")	Maecenas venenatis enim condimentum ultrices fringilla. Nulla eget libero rhoncus, bibendum diam eleifend, vulputate mi. Fusce non nibh pulvinar, ornare turpis id	
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/4.jpg")
+							.media-body
+								small.text-muted Mitch Bradberry - On 14/12/2013
+								a.t-overflow(href="#") Phasellus interdum felis enim, eu bibendum ipsum tristique vitae. Phasellus feugiat massa orci, sed viverra felis aliquet quis. Curabitur vel blandit odio. Vestibulum sagittis quis sem sit amet tristique.
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/1.jpg")
+							.media-body
+								small.text-muted Nadin Jackson - On 15/12/2013
+								a.t-overflow(href="#") Ipsum wintoo consectetur urna nec tempor adipiscing. Proin sit amet nisi ligula. Sed eu adipiscing lectus
+						.media
+							.pull-left
+								img(width="40",src="img/profile-pics/2.jpg")
+							.media-body
+								small.text-muted David Villa - On 16/12/2013
+								a.t-overflow(href="#") Suspendisse in purus ut nibh placerat Cras pulvinar euismod nunc quis gravida. Suspendisse pharetra																														
+					.media.text-center.whiter.l-100
+						a(href="#")
+							small VIEW ALL
+			ol.breadcrumb.hidden-xs
+				li
+					a(href="#") HOME
+				li
+					a(href="#") Library
+				li
+					a(href="#") Data
+
+			h4.page-title DASBOARD
+
+			.block-area.shortcut-area
+				a.shortcut.tile(href="#")
+					img(src="img/shortcuts/money.png")
+					small.t-overflow Purchases
+				a.shortcut.tile(href="#")
+					img(src="img/shortcuts/twitter.png", alt="")
+					small.t-overflow Tweets
+				a.shortcut.tile(href="#")
+					img(src="img/shortcuts/calendar.png", alt="")
+					small.t-overflow Calendar
+				a.shortcut.tile(href="#")
+					img(src="img/shortcuts/stats.png", alt="")
+					small.t-overflow Statistics	
+				a.shortcut.tile(href="#")
+					img(src="img/shortcuts/connections.png")
+					small.t-overflow Connection	
+				a.shortcut.tile(href="#")
+					img(src="img/shortcuts/reports.png", alt="")
+					small.t-overflow Reports
+			hr.whiter
+			.block-area
+				.row
+					.col-md-3.col-xs-6
+						.tile.quick-stats
+							.stats-line-2.pull-left
+							.data
+								h2(data-value="98") 0
+								small Tickets Today
+
+					.col-md-3.col-xs-6
+						.tile.quick-stats.media
+							.stats-line-3.pull-left
+							.media-body
+								h2(data-value="1452") 0
+								small Shipments today
+
+					.col-md-3.col-xs-6
+						.tile.quick-stats.media
+
+							.stats-line-4.pull-left
+
+							.media-body
+								h2(data-value="4896") 0
+								small Orders today
+
+					.col-md-3.col-xs-6
+						.tile.quick-stats.media
+							#stats-line.pull-left
+							.media-body
+								h2(data-value="29356") 0
+								small Site visits today	
+
+			hr.whiter
+
+			// Main Widgets	
+
+			.block-area
+				.row
+					.col-md-8
+						// Main Chart
+						.tile
+							h2.tile-title Statistics
+							.tile-config.dropdown
+								a(data-toggle="dropdown",href="#").title-menu
+								ul.dropdown-menu.pull-right.text-right
+									li
+										a.tile-info-toggle(href="#") Chart Information
+									li
+										a(href="#") Refresh
+									li
+										a(href="#") Settings
+							.p-10
+								#line-chart.main-chart(style="height: 250px")
+
+								.chart-info
+									ul.list-unstyled
+										li.m-b-10 Total Sales 1200
+											span.pull-right.text-muted.t-s-0
+												i.fa.fa-chevron-up +12%
+										li
+											small Local 640
+												span.pull-right.text-muted.t-s-0
+													i.fa.m-l-15.fa-chevron-down	+12%
+										li
+											small Local 640
+												span.pull-right.text-muted.t-s-0
+													i.fa.m-l-15.fa-chevron-down -8%
+											.progress.progress-small
+												.progress-bar.progress-bar-warning(role="progress", aria-valuenow="40", aria-valuemin="0", aria-valuemax="100", style="width:40%")
+										li
+											small Foreign 560
+												span.pull-right.text-muted.t-s-0
+													i.fa.m-l-15.fa-chevron-up -3%
+											.progress.progress-small
+												.progress-bar.progress-bar-info(role="progress", aria-valuenow="40", aria-valuemin="0", aria-valuemax="100", style="width:60%")																	
+
+						// Pies
+						.tile.text-center
+								.tile-dark.p-10
+									.pie-chart-tiny(data-percent="86")
+										span.percent
+										span.pie-title New Visitors
+											i.m-l-5.fa.fa-retweet
+									.pie-chart-tiny(data-percent="26")
+										span.percent
+										span.pie-title Bounce Rate
+											i.m-l-5.fa.fa-retweet
+									.pie-chart-tiny(data-percent="57")
+										span.percent
+										span.pie-title Emails Sent
+											i.m-l-5.fa.fa-retweet
+									.pie-chart-tiny(data-percent="34")
+										span.percent
+										span.pie-title Sales Rate
+											i.m-l-5.fa.fa-retweet
+									.pie-chart-tiny(data-percent="81")
+										span.percent
+										span.pie-title New Signups
+											i.m-l-5.fa.fa-retweet
+
+						// Recent Postings
+						.row
+							.col-md-6
+								.tile
+									h2.tile-title Recent Postings
+									.tile-config.dropdown
+										a(data-toggle="dropdown",href="#").title-menu
+										ul.dropdown-menu.animated.pull-right.text-right
+											li
+												a(href="#") Refresh
+											li
+												a(href="#") Settings
+
+									.listview.narrow
+										.media.p-l-5
+											.pull-left
+												img(width="40",src="img/profile-pics/1.jpg", alt="")
+											.media-body
+												small.text-muted 2 Hours ago by Adrien San
+												a.t-overflow(href="#") Cras molestie fermentum nibh, ac semper
+										.media.p-l-5
+											.pull-left
+												img(width="40",src="img/profile-pics/2.jpg", alt="")
+											.media-body
+												small.text-muted 5 Hours ago by David Villa
+												a.t-overflow(href="#") Suspendisse in purus ut nibh placerat
+										.media.p-l-5
+											.pull-left
+												img(width="40",src="img/profile-pics/3.jpg", alt="")
+											.media-body
+												small.text-muted On 15/12/2013 by Mitch bradberry
+												a.t-overflow(href="#") Cras pulvinar euismod nunc quis gravida. Suspendisse pharetr
+										.media.p-l-5
+											.pull-left
+												img(width="40",src="img/profile-pics/4.jpg", alt="")
+											.media-body
+												small.text-muted On 14/12/2013 by Mitch bradberry
+												a.t-overflow(href="#") Cras pulvinar euismod nunc quis gravida.
+										.media.p-l-5
+											.pull-left
+												img(width="40",src="img/profile-pics/5.jpg", alt="")
+											.media-body
+												small.text-muted On 13/12/2013 by Mitch bradberry
+												a.t-overflow(href="#") Integer a eros dapibus, vehicula quam accumsan, tincidunt purus								 										
+										.media.p-5.text-center.l-100
+											a(href="#")
+												smallVIEW ALL		
+
+							// Tasks to do
+							.col-md-6
+								.tile
+									h2.tile-title Task to do
+									.title-config.dropdown
+										a(data-toggle="dropdown", href="#").title-menu
+										ul.dropdown-menu.pull-right.text-right
+											li#todo-add
+												a(href="#") Add New
+											li#todo-refresh
+												a(href="#") Refresh
+											li#todo-clear
+												a(href="#") Clear ALL
+
+									.listview.todo-list.sortable
+										.media
+											.checkbox.m-0
+												label.t-overflow
+													input(type="checkbox") 
+													| Curabitur quis nisi ut nunc gravida
+										.media
+											.checkbox.m-0
+												label.t-overflow
+													input(type="checkbox") 
+													| Gravida wendy lorem ipsum seen
+													
+										.media
+											.checkbox.m-0
+												label.t-overflow
+													input(type="checkbox") 
+													| Fedrix quis nisi ut nunc gravida suscipit at feugiat purus					 							
+									h2.tile-title Completed Tasks
+									.listview.todo-list.sortable
+										.media
+											.checkbox.m-0
+												label.t-overflow
+													input(type="checkbox")				
+													| Motor susbect win latictals bin the woodat cool
+										.media
+											.checkbox.m-0
+												label.t-overflow
+													input(type="checkbox")				
+													| Wendy mitchel susbect win latictals bin the woodat cool
+										.media
+											.checkbox.m-0
+												label.t-overflow
+													input(type="checkbox")				
+													| Latictals bin the woodat cool for the win
+						.clearfix
+					
+					.col-md-4
+						// USA Map
+						.tile
+							h2.tile-title Live visits
+							.tile-config.dropdown
+								a(data-toggle="dropdown",href="#").title-menu
+								ul.dropdown-menu.pull-right.text-right
+									li
+										a(href="#") Refresh
+									li
+										s(href="#") Settings
+
+							#usa-map
+
+						// Dynamic Chart
+						.tile
+							h2.tile-title Server Process
+							.title-config.dropdown
+								a(data-toggle="dropdown",href="#").tile-menu
+								ul.dropdown-menu.pull-right.text-right
+									li
+										a(href="#") Refresh
+									li 
+										a(href="#") Settings
+
+							.p-t-10.p-r-5.p-b-5
+								#dynamic-chart(style="height: 200px")
+						.tile 
+							h2.tile-title Social Media activities
+							.tile-config.dropdown
+								a(data-toggle="dropdown",href="#").tile-menu
+								ul.dropdown-menu.pull-right.text-right
+									li
+										a(href="#") Refresh	
+
+							.listview.narrow
+								.media
+									.pull-right
+										.counts 367892 	
+									.media-body
+										h6 FACEBOOK LIKES
+
+								.media
+									.pull-right
+										.counts 2012 	
+									.media-body
+										h6 GOOGLE +1s
+
+								.media
+									.pull-right
+										.counts 56312 	
+									.media-body
+										h6 YOUTUBE VIEWS
+
+								.media
+									.pull-right
+										.counts 785879 	
+									.media-body
+										h6 TWITTER FOLLOWERS
+								
+								.media
+									.pull-right
+										.counts 68 	
+									.media-body
+										h6 WEBSITE COMMENTS
+					.clearfix
+			// Chat			
+			.chat
+				//Chat List
+				.pull-left.chat-list
+					.listview.narrow						
+						.media
+							img.pull-left(src="img/profile-pics/2.jpg", width="30", alt="")
+							.media-body 
+								span.t-overflow.p-t-5 David Volla Watkinson	
+						.media
+							img.pull-left(src="img/profile-pics/3.jpg", width="30", alt="")
+							.media-body
+								span.t-overflow.p-t-5 Mitchell Christein
+						.media
+							img.pull-left(src="img/profile-pics/4.jpg", width="30", alt="")
+							.media-body 
+								span.t-overflow.p-t-5 Wayne Parnell
+						.media
+							img.pull-left(src="img/profile-pics/5.jpg", width="30", alt="")
+							.media-body 
+								span.t-overflow.p-t-5 Melina April
+						.media
+							img.pull-left(src="img/profile-pics/6.jpg", width="30", alt="")
+							.media-body 
+								span.t-overflow.p-t-5 Ford Harnson
+
+				// Chat Area
+				.media-body
+					.chat-header
+						a.btn.btn-sm(href="#")
+							i.fa.fa-circle-o.status.m-r-5 
+							| Chat with Friends
+					
+					.chat-body
+						.media
+							img.pull-right(src="img/profile-pics/1.jpg",width="30",alt="")
+							.media-body.pull-right Hiiii
+								br 
+								| How you doing bro?
+								small Me - 10 Mins ago	
+						.media.pull-left
+							img.pull-left(src="img/profile-pics/2.jpg",width="30",alt="")
+							.media-body.pull-right I'm doing well buddy.
+								br 
+								| How do you do?
+								small David - 9 Mins ago
+
+						.media.pull-right
+							img.pull-right(src="img/profile-pics/2.jpg",width="30",alt="")
+							.media-body.pull-right I'm Fine bro
+								br 
+								| Thank you for asking
+								small Me - 8 Mins ago	
+
+						.media.pull-right
+							img.pull-right(src="img/profile-pics/2.jpg",width="30",alt="")
+							.media-body.pull-right Any idea for a hangout?							
+								small Me - 8 Mins ago
+
+					.chat-footer.media
+						i.chat-list-toggle.pull-left.fa.fa-bars
+						i.pull-right.fa.fa-picture-o
+						.media-body
+							textarea.form-control(placeholder="Type something...")																												

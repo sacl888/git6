@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	section#login
+		header
+			h1 CONSUMMER
+			P Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu risus. Curabitur commodo lorem fringilla enim feugiat commodo sed ac lacus.
+		.clearfix
+
+		<!-- Login -->	
+		form.box.tile.animated.active#box-login(action='', method='post')
+			h2.m-t-0.m-b-15 Login
+			input(type='text',name='user',placeholder='Username or Email Address').login-control.m-b-10.required
+			input(type='password',name='pass',placeholder='Password').login-control.required
+			.checkbox.m-b-20
+				label Remember Me
+					input(type='checkbox') 
+			button.btn.btn-sm.m-r-5 Sign In	
+			small
+				a.box-switcher(data-switch='box-register',href='#') Don't have an Account? or		
+				a.box-switcher(data-switch='box-reset', href='#') Forgot Password?
+					
+
+
+						
