@@ -1,3 +1,4 @@
+var port = process.env.PORT || 3000;
 var express = require('express');
 var path = require('path');
 var http = require('http');
@@ -27,7 +28,7 @@ app.io.route('ready', function(req) {
     req.io.emit('recibirUser', 'mensaje de bienvenida');
 })*/
 
-app.listen(3000);
+app.listen(port);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
