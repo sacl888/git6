@@ -1,3 +1,4 @@
+var port = process.env.PORT || 3000;
 var express = require("express"), 
 http = require("http"),
 app = express(),
@@ -15,7 +16,7 @@ app.get("/", function(req,res){
 	res.render("index.jade", {title : "Chat con NodeJS, Express, Socket.IO y jQuery"});
 });
 
-server.listen(3000);
+server.listen(port);
 
 //objecto para guardar en la sesión del socket a los que se vayan conectando
 var usuariosOnline = {};
